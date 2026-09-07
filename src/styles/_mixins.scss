@@ -1,0 +1,33 @@
+@mixin from($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin until($bp) {
+  @media (max-width: $bp - 1px) {
+    @content;
+  }
+}
+
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($n) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $n;
+  overflow: hidden;
+}
+
+@mixin hide-last-row($cols) {
+  @for $r from 1 to $cols {
+    &:has(> :nth-child(#{$cols}n + #{$r}):last-child)
+      > :nth-last-child(-n + #{$r}) {
+      display: none;
+    }
+  }
+}

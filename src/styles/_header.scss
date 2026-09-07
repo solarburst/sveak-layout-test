@@ -1,0 +1,122 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: $header-height;
+  padding: 0 $pad;
+  background: $bg;
+}
+
+@include until($desktop) {
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom: 1px solid $border;
+  }
+}
+
+@include from($desktop) {
+  .header {
+    justify-content: flex-end;
+  }
+}
+
+.burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -10px;
+  cursor: pointer;
+  color: $text;
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 2px;
+  }
+
+  @include from($desktop) {
+    display: none;
+  }
+}
+
+.burger__box {
+  position: relative;
+  width: 24px;
+  height: 21px;
+}
+
+.burger__line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transition: transform $transition, opacity $transition, top $transition;
+
+  &:nth-child(1) {
+    top: 2px;
+  }
+
+  &:nth-child(2) {
+    top: 9.5px;
+  }
+
+  &:nth-child(3) {
+    top: 17px;
+  }
+}
+
+.nav-toggle:checked ~ .page .burger__line {
+  &:nth-child(1) {
+    top: 9.5px;
+    transform: rotate(45deg);
+  }
+
+  &:nth-child(2) {
+    opacity: 0;
+  }
+
+  &:nth-child(3) {
+    top: 9.5px;
+    transform: rotate(-45deg);
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actions__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: $text;
+  border-radius: 50%;
+  transition: background-color $transition, color $transition;
+
+  &:hover,
+  &:focus-visible {
+    color: $accent;
+    background-color: rgba($accent, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 2px;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,0 +1,22 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+.footer {
+  padding: 12px $pad 20px;
+  border-top: 1px solid $border;
+  background: $bg;
+}
+
+@include from($desktop) {
+  .footer {
+    padding-left: calc(#{$aside-width} + #{$pad});
+  }
+}
+
+.footer__text {
+  max-width: 960px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: $text-muted;
+  overflow-wrap: break-word;
+}

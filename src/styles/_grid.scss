@@ -1,0 +1,45 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+.cards {
+  display: grid;
+  justify-content: center;
+  align-content: start;
+  gap: $gap-mobile;
+  grid-template-columns: repeat(2, minmax($card-min, $card-max));
+  max-width: calc(#{$card-max} * 2 + #{$gap-mobile});
+  margin: 0 auto;
+
+  @include until($tablet) {
+    @include hide-last-row(2);
+  }
+}
+
+@include from($tablet) {
+  .cards {
+    max-width: none;
+    gap: $gap;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @include until($desktop) {
+      @include hide-last-row(3);
+    }
+  }
+}
+
+@include from($desktop) {
+  .cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    @include until($wide) {
+      @include hide-last-row(4);
+    }
+  }
+}
+
+@include from($wide) {
+  .cards {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    @include hide-last-row(5);
+  }
+}

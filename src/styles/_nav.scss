@@ -1,0 +1,193 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+.nav-toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-toggle:focus-visible ~ .page .burger {
+  outline: 2px solid $accent;
+  outline-offset: 2px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  background: $menu-bg;
+  overscroll-behavior: contain;
+}
+
+.nav__head {
+  display: flex;
+  align-items: center;
+  height: $header-height;
+  padding: 0 $pad;
+  flex: 0 0 auto;
+}
+
+.nav__brand {
+  font-family: $font-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.nav__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -10px;
+  margin-right: 8px;
+  cursor: pointer;
+  color: $text;
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 2px;
+  }
+
+  @include from($desktop) {
+    display: none;
+  }
+}
+
+.nav__close-icon {
+  position: relative;
+  width: 19px;
+  height: 19px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8.5px;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px $pad 32px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background-color $transition;
+
+  &:hover,
+  &:focus-visible {
+    background-color: rgba($text, 0.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 2px;
+  }
+}
+
+.nav__icon {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: $accent;
+}
+
+.nav__label {
+  @include ellipsis;
+  font-size: 15px;
+}
+
+@include until($desktop) {
+  .nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 30;
+    width: 292px;
+    max-width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    transform: translateX(-105%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform $transition, visibility $transition;
+  }
+
+  .nav-toggle:checked ~ .page .nav {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+@include until($tablet) {
+  html:has(.nav-toggle:checked),
+  body:has(.nav-toggle:checked) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  .nav {
+    width: 100%;
+  }
+
+  .nav-toggle:checked ~ .page .nav .nav__list {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}
+
+@include from($desktop) {
+  .nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    max-height: 100%;
+    overflow: hidden;
+    border-right: 1px solid $border;
+  }
+
+  .nav__head {
+    border-bottom: 1px solid $border;
+  }
+
+  .nav__list {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}

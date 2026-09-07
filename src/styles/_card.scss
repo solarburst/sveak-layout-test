@@ -1,0 +1,56 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 4px;
+  transition: transform $transition, box-shadow $transition;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba($text, 0.08);
+  }
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.card__index {
+  font-family: $font-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: $text-muted;
+}
+
+.card__title {
+  @include ellipsis;
+  font-family: $font-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  transition: color $transition;
+}
+
+.card:hover .card__title {
+  color: $accent-dark;
+}
+
+.card__text {
+  @include line-clamp(2);
+  font-size: 12px;
+  line-height: 1.35;
+  color: $text-muted;
+}
